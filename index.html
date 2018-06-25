@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<title>Jogo da Forca - Vitor Machado de Oliveira Neves CC1M</title>
+<script>
+	var palavras, palavraaleatoria, exibicao, contadorerro, resposta;
+    palavras = ["pneumoultramicroscopicosilicovulcanoconiose", "morfossintaxe", "ortorrinolaringologista", "inconstitucionalissimamente"];
+    palavraaleatoria = palavras[Math.floor(Math.random()*palavras.length)];
+    exibicao;
+    contadorerro = 0;
+    resposta = [];
+
+    function inicio(){
+    	for(var i=0; i<palavraaleatoria.length; i++){
+    		resposta[i] = "_";
+    	}
+    	exibicao = resposta.join(" ");
+    	document.getElementById("resp").innerHTML = exibicao;
+    }
+
+    function chute(){
+    	if(contadorerro<6){
+    		var letra = document.getElementById("letra").value;
+    		if(letra.length>0){
+    			var teste = palavraaleatoria.includes(letra);
+    			if (teste==true){
+    				for(var i=0; i<palavraaleatoria.length; i++){
+    					if(palavraaleatoria[i] === letra){
+    						resposta[i] = letra;
+    					}
+    				}
+				}
+
+				else if (teste == false){
+					contadorerro++;
+				}
+    			document.getElementById("incorretas").innerHTML = "numero de tentativas incorretas: " + contadorerro;
+    			document.getElementById("resp").innerHTML = resposta.join(" ");
+    		}
+    		
+    	}
+    	else if(contadorerro>=6){
+    		document.getElementById("resp").innerHTML = "A resposta correta era " + palavraaleatoria + ".";
+    	}
+    }
+
+
+</script>
+</head>
+
+<body onload="inicio()">
+	<h1>Jogo da forca</h1>
+	<p>Digite abaixo uma letra.</p>
+	<input id="letra" type="text">
+	<input type="button" value="tentar" onclick="chute()">
+	<p id="resp"></p>
+	<p id="incorretas"></p>
+</body>
+
+</html>
